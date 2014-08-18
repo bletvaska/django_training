@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<h1>Posts written by {{ object.username }}</h1>
+{% endblock title %}
+
+{% block content %}
+<ul>
+{% for post in object.post_set.all %}
+    <li>
+        <a href="{% url 'post_detail' post.pk %}">{{ post.content }}</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock content %}

@@ -1,41 +1,56 @@
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+)
 from pyper.models import Post, Tag
 
-
-def all_posts(request):
-    "shows all posts"
-    posts = Post.objects.order_by('-pub_date')
-    return render(request, 'posts.html', {'posts': posts})
+class PostListView(ListView):
+    model = Post
+    template_name = 'post_list.html'
 
 
-def view_post(request, post_id):
-    "shows single post "
-    post = Post.objects.get(pk=post_id)
-    return render(request, 'post.html',
-                  {'post': post, 'tags': post.tags.all()})
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'post_detail.html'
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(PostDetailView, self).get_context_data(**kwargs)
+    #     context['tags'] = self.object.tags.all()
+    #     # context['object'].tags.all()
+    #     return context
 
 
-def view_tag(request, tag_title):
-    "shows single tag"
-    tag = Tag.objects.get(title=tag_title)
-    return render(request, 'tag.html', {'tag': tag, 'posts': tag.post_set.all()})
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'post_create.html'
+    fields = ['content', 'author']
+
+    def get_success_url(self):
+        return reverse('post_list')
 
 
-def all_tags(request):
-    "shows all tags"
-    tags = Tag.objects.all()
-    return render(request, 'tags.html', {'tags': tags})
+class TagDetailView(DetailView):
+    model = Tag
+    template_name = 'tag_detail.html'
+    slug_field = 'title'
+    slug_url_kwarg = 'title'
 
 
-def view_author(request, username):
-    "shows author"
-    author = User.objects.get(username=username)
-    posts = author.post_set.all()
-    return render(request, 'author.html', {'author': author, 'posts': posts})
+class TagListView(ListView):
+    model = Tag
+    template_name = 'tag_list.html'
 
 
-def all_authors(request):
-    "shows all users"
-    users = User.objects.all()
-    return render(request, 'authors.html', {'authors': users})
+class AuthorListView(ListView):
+    model = User
+    template_name = 'author_list.html'
+
+class AuthorDetailView(DetailView):
+    model = User
+    template_name = 'author_detail.html'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'

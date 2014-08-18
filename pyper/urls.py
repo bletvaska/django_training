@@ -1,17 +1,33 @@
 from django.conf.urls import patterns,  url
 from pyper import views
 
-urlpatterns = patterns('pyper.views',
+urlpatterns = patterns('',
+
     url(r'posts$',
-        'all_posts', name='all_posts'),
-    url(r'posts/(?P<post_id>\d+)$',
-        'view_post', name='view_post'),
-    url(r'tags/(?P<tag_title>\w+)$',
-        'view_tag', name='view_tag'),
+        views.PostListView.as_view( ),
+        name="post_list"),
+
+    url(r'posts/(?P<pk>\d+)$',
+        views.PostDetailView.as_view(),
+        name="post_detail"),
+
+    url(r'posts/new$',
+        views.PostCreateView.as_view(),
+        name="post_create"),
+
     url(r'tags$',
-        'all_tags', name='all_tags'),
+        views.TagListView.as_view(),
+        name='tag_list'),
+
+    url(r'tags/(?P<title>\w+)$',
+        views.TagDetailView.as_view(),
+        name='tag_detail'),
+
     url(r'authors$',
-        'all_authors', name='all_authors'),
+        views.AuthorListView.as_view(),
+        name='author_list'),
+
     url(r'authors/(?P<username>\w+)$',
-        'view_author', name='view_author'),
+        views.AuthorDetailView.as_view(),
+        name='author_detail'),
 )

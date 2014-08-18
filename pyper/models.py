@@ -14,7 +14,8 @@ class Tag(models.Model):
 
     def get_absolute_url(self):
         "returns absolute path for tag"
-        return reverse('view_tag', kwargs={'tag_id': self.id})
+        return reverse('view_tag',
+            kwargs={'tag_id': self.id})
 
 
 class Post(models.Model):
@@ -34,7 +35,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         "returns absolute path for post"
-        return reverse('view_post', kwargs={'post_id': self.id})
+        return reverse('post_detail',
+            kwargs={'pk': self.id})
 
     # https://docs.djangoproject.com/en/1.6/ref/models/instances/#django.db.models.Model.save
     def save(self, **kwargs):

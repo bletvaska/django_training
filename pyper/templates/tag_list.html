@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<h1>All Users</h1>
+<h1>All Tags</h1>
 {% endblock title %}
 
 {% block content %}
 <ul>
-{% for author in authors %}
+{% for tag in object_list %}
     <li>
-        <a href="{% url 'view_author author.username %}">{{ author.username }}</a>
+        <a href="{% url 'tag_detail' tag.title %}">#{{ tag.title }}</a>
     </li>
 {% endfor %}
 </ul>
