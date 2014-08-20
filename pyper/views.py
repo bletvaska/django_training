@@ -54,3 +54,43 @@ class AuthorDetailView(DetailView):
     template_name = 'author_detail.html'
     slug_field = 'username'
     slug_url_kwarg = 'username'
+
+
+# ____  _____ ____ _____      _    ____ ___
+#|  _ \| ____/ ___|_   _|    / \  |  _ \_ _|
+#| |_) |  _| \___ \ | |     / _ \ | |_) | |
+#|  _ <| |___ ___) || |    / ___ \|  __/| |
+#|_| \_\_____|____/ |_|   /_/   \_\_|  |___|
+#
+
+
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView
+)
+from rest_framework import viewsets
+
+class PostReadUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    model = Post
+
+class PostCreateReadView(ListCreateAPIView):
+    model = Post
+
+
+from pyper.serializers import TagSerializer, PostSerializer
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagSerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+# class UserViewSet(viewsets.ModelViewSet):
+#     """
+#     API endpoint that allows users to be viewed or edited.
+#     """
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer

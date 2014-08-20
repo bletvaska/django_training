@@ -40,11 +40,22 @@ INSTALLED_APPS = (
     # 'django.contrib.flatpages',
     # 'hello',
     # 'ublog',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'django_extensions',
     'pyper',
     'south',
+    'rest_framework',
 )
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.XMLRenderer',
+
+    )
+}
 
 # SITE_ID = 1
 
