@@ -17,10 +17,8 @@ class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
 
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(PostListView, self).get_context_data(**kwargs)
-    #     return context
+    def get_queryset(self):
+        return Post.objects.order_by('-pub_date')
 
 
 class PostDetailView(DetailView):
@@ -33,6 +31,11 @@ class PostCreateView(CreateView):
     template_name = 'post_form.html'
     fields = ['content', 'author']
 
+    def get_context_data(self, **kwargs):
+            context = super(PostCreateView, self).get_context_data(**kwargs)
+            context['target'] = reverse('post-create')
+            return context
+
     def get_success_url(self):
         return reverse('post-list')
 
@@ -41,6 +44,11 @@ class PostUpdateView(UpdateView):
     model = Post
     template_name = 'post_form.html'
     fields = ['content', 'author']
+
+    def get_context_data(self, **kwargs):
+            context = super(PostUpdateView, self).get_context_data(**kwargs)
+            context['target'] = reverse('post-edit', kwargs = {'pk': self.get_object().pk})
+            return context
 
 
 class PostDeleteView(DeleteView):

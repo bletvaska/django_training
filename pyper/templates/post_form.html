@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
+{% if object.id %}
+<h1>Update Post</h1>
+{% else %}
 <h1>Create Post</h1>
+{% endif %}
 {% endblock title %}
 
 {% block content %}
@@ -9,7 +13,12 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+
+    {% if object.id %}
+    <input type="submit" value="Update" />
+    {% else %}
     <input type="submit" value="Create" />
+    {% endif %}
 </form>
 
 

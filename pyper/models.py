@@ -44,7 +44,10 @@ class Post(models.Model):
     # https://docs.djangoproject.com/en/1.6/ref/models/instances/#django.db.models.Model.save
     def save(self, *args, **kwargs):
         "saves the post"
-        super(Post, self).save(self)
+        print(args)
+        print(kwargs)
+        if not self.pk:
+            super(Post, self).save(self)
 
         tags = Post.pattern.findall(self.content)
         # select * from tag where title in ('tag1', 'tag2');

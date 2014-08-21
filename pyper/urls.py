@@ -17,9 +17,9 @@ urlpatterns = patterns('',
         views.PostCreateView.as_view(),
         name="post-create"),
 
-    url(r'^posts/(?P<pk>\d+)/update$',
+    url(r'^posts/(?P<pk>\d+)/edit$',
         views.PostUpdateView.as_view(),
-        name="post-update"),
+        name="post-edit"),
 
     url(r'^posts/(?P<pk>\d+)/delete$',
         views.PostDeleteView.as_view(),
