@@ -6,6 +6,8 @@ from django.views.generic import (
     ListView,
     DetailView,
     CreateView,
+    UpdateView,
+    DeleteView,
 )
 from pyper.models import Post, Tag
 
@@ -16,32 +18,34 @@ class PostListView(ListView):
     template_name = 'post_list.html'
 
 
-    def get_context_data(self, **kwargs):
-        context = super(PostListView, self).get_context_data(**kwargs)
-        # print(self.request)
-        # print(self.request.META['QUERY_STRING'])
-        # print(self.request.GET.get('my_text'))
-        # print(self.request.GET.get('my_text'))
-        # logger.info('hello world')
-        # print(get_query_set())
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(PostListView, self).get_context_data(**kwargs)
+    #     return context
 
 
 class PostDetailView(DetailView):
     model = Post
     template_name = 'post_detail.html'
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(PostDetailView, self).get_context_data(**kwargs)
-    #     context['tags'] = self.object.tags.all()
-    #     # context['object'].tags.all()
-    #     return context
-
 
 class PostCreateView(CreateView):
     model = Post
-    template_name = 'post_create.html'
+    template_name = 'post_form.html'
     fields = ['content', 'author']
+
+    def get_success_url(self):
+        return reverse('post-list')
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    template_name = 'post_form.html'
+    fields = ['content', 'author']
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    template_name = 'post_confirm_delete.html'
 
     def get_success_url(self):
         return reverse('post-list')

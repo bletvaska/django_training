@@ -17,6 +17,14 @@ urlpatterns = patterns('',
         views.PostCreateView.as_view(),
         name="post-create"),
 
+    url(r'^posts/(?P<pk>\d+)/update$',
+        views.PostUpdateView.as_view(),
+        name="post-update"),
+
+    url(r'^posts/(?P<pk>\d+)/delete$',
+        views.PostDeleteView.as_view(),
+        name="post-delete"),
+
     url(r'^tags$',
         views.TagListView.as_view(),
         name='tag-list'),

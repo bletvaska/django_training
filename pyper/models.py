@@ -1,7 +1,10 @@
 import re
+import logging
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+
+logger = logging.getLogger(__name__)
 
 
 class Tag(models.Model):
@@ -39,7 +42,7 @@ class Post(models.Model):
             kwargs={'pk': self.id})
 
     # https://docs.djangoproject.com/en/1.6/ref/models/instances/#django.db.models.Model.save
-    def save(self, **kwargs):
+    def save(self, *args, **kwargs):
         "saves the post"
         super(Post, self).save(self)
 
@@ -56,3 +59,7 @@ class Post(models.Model):
 
         # add tags directly as a list
         self.tags = tags_existing
+
+        logger.info("New post #{} created".format(self.pk))
+
+
