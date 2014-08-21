@@ -8,7 +8,7 @@
 <ul>
 {% for tag in object_list %}
     <li>
-        <a href="{% url 'tag_detail' tag.title %}">#{{ tag.title }}</a>
+        <a href="{% url 'tag-detail' title=tag.title %}">#{{ tag.title }}</a>
     </li>
 {% endfor %}
 </ul>

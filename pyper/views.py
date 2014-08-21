@@ -17,8 +17,8 @@ class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
 
-    def get_queryset(self):
-        return Post.objects.order_by('-pub_date')
+    class Meta:
+        ordering = ['-pub_date']
 
 
 class PostDetailView(DetailView):
