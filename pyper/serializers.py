@@ -8,7 +8,7 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     author = serializers.HyperlinkedRelatedField(
-        view_name = 'author_detail',
+        view_name = 'author_detail', # user-detail
         lookup_field = 'username',
     )
     class Meta:

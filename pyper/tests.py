@@ -1,46 +1,37 @@
+import re
 from django.test import TestCase
-from pyper.models import Post, Tag
 from django.contrib.auth.models import User
-from django.test.client import Client
-from django.core.urlresolvers import reverse
+from pyper.models import Post, Tag
 
-# Create your tests here.
+
 class PostTests(TestCase):
-    def setUp(self):
-        author = User.objects.create(username='john')
-        post = Post.objects.create(content='#hello #world from #django', author=author)
 
-    def test_tags_recognition(self):
-        author = User.objects.get(username='john')
-        post = Post.objects.get(pk=1)
+    @classmethod
+    def setUpClass(cls):
+        print('--------------- running setup')
 
-        for tag in post.tags.all():
-            self.assertIn(tag.title, ('hello', 'world', 'django'))
+        content = '#django is #mega #super #bomba #spica'
+        pattern = re.compile(r'#(?P<title>\w+)')
+        cls.tags = pattern.findall(content)
+        cls.non_tags = ('jano', 'cita', 'knihu')
 
-    def test_form(self):
-        client = Client()
-        url = reverse('post_create')
+        author = User.objects.create(username='tester')
+        cls.post = Post.objects.create(
+            content=content,
+            author=author
+        )
 
-        response = client.post(url, {'content': '#linksys router', 'author': 1})
+    def test_number_of_extracted_hashtags(self):
+        # check number of tags
+        self.assertTrue(len(self.post.tags.all()) == len(self.tags))
 
-        post = Post.objects.get(content='#linksys router')
 
-        self.assertIsNotNone(post)
+    def test_hashtags_extraction(self):
+        # check if the post is of type Post
+        self.assertIsInstance(type(self).post, Post)
 
-class RestAPITests(TestCase):
-    def setUp(self):
-        author = User.objects.create(username='john')
-        post = Post.objects.create(content='#hello #world from #django', author=author)
-
-    def test_all_posts(self):
-        client = Client()
-        url = reverse('post_rest_api')
-        response = client.get(url)
-
-        self.assertEqual(response.status_code, 200)
-
-        self.assertEqual(len(response.data), 1)
-
-        # response.context_data -> data as json
-        # response.template_name -> name of the template to be rendered
+        # test for all tags
+        for tag in self.post.tags.all():
+            self.assertIn(tag.title, self.tags)
+            self.assertNotIn(tag.title, self.non_tags)
 

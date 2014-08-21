@@ -35,7 +35,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         "returns absolute path for post"
-        return reverse('post_detail',
+        return reverse('post-detail',
             kwargs={'pk': self.id})
 
     # https://docs.djangoproject.com/en/1.6/ref/models/instances/#django.db.models.Model.save

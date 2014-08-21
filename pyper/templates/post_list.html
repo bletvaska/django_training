@@ -6,14 +6,14 @@
 
 {% block content %}
 <ul>
-{% for post in post_list %}
+{% for post in object_list %}
     <li>
-        <a href="{% url 'post_detail' post.pk %}">{{ post.content }}</a>
+        <a href="{% url 'post-detail' post.pk %}">{{ post.content }}</a>
         [<a href="">edit</a>]
         [<a href="">delete</a>]
     </li>
 {% endfor %}
 </ul>
 
-<a href="{% url 'post_create' %}">New Post</a>
+<a href="{% url 'post-create' %}">New Post</a>
 {% endblock content %}

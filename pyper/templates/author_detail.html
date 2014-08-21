@@ -8,7 +8,7 @@
 <ul>
 {% for post in object.post_set.all %}
     <li>
-        <a href="{% url 'post_detail' post.pk %}">{{ post.content }}</a>
+        <a href="{% url 'post-detail' post.pk %}">{{ post.content }}</a>
     </li>
 {% endfor %}
 </ul>

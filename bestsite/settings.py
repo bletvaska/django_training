@@ -39,8 +39,7 @@ INSTALLED_APPS = (
     # 'django.contrib.sites',
     # 'django.contrib.flatpages',
     # 'hello',
-    # 'ublog',
-    # 'debug_toolbar',
+    'debug_toolbar',
     'django_extensions',
     'pyper',
     'south',
@@ -56,8 +55,6 @@ REST_FRAMEWORK = {
 
     )
 }
-
-# SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',

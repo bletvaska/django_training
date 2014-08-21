@@ -1,3 +1,4 @@
+import logging
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -8,9 +9,22 @@ from django.views.generic import (
 )
 from pyper.models import Post, Tag
 
+logger = logging.getLogger(__name__)
+
 class PostListView(ListView):
     model = Post
     template_name = 'post_list.html'
+
+
+    def get_context_data(self, **kwargs):
+        context = super(PostListView, self).get_context_data(**kwargs)
+        # print(self.request)
+        # print(self.request.META['QUERY_STRING'])
+        # print(self.request.GET.get('my_text'))
+        # print(self.request.GET.get('my_text'))
+        # logger.info('hello world')
+        # print(get_query_set())
+        return context
 
 
 class PostDetailView(DetailView):
@@ -30,7 +44,7 @@ class PostCreateView(CreateView):
     fields = ['content', 'author']
 
     def get_success_url(self):
-        return reverse('post_list')
+        return reverse('post-list')
 
 
 class TagDetailView(DetailView):
